@@ -10,6 +10,8 @@ class FieldsController < ApplicationController
   end
 
   def create
+    field = Field.create(desc:params['desc'])
+    render json: field
   end
 
   def update
