@@ -6,4 +6,6 @@ class User < ActiveRecord::Base
 
   has_many :users_fields
   has_many :fields, through: :users_fields, :source => :field
+  has_many :users_roles
+  has_many :roles, through: :users_roles, :source => :role
 end

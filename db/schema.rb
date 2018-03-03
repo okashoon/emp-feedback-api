@@ -10,10 +10,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180303075845) do
+ActiveRecord::Schema.define(version: 20180303124158) do
 
   create_table "fields", force: :cascade do |t|
     t.string "desc"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "roles", force: :cascade do |t|
+    t.string "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -52,6 +58,13 @@ ActiveRecord::Schema.define(version: 20180303075845) do
     t.integer "field_id"
     t.datetime "date"
     t.integer "state"
+  end
+
+  create_table "users_roles", force: :cascade do |t|
+    t.integer "user_id"
+    t.integer "role_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end
