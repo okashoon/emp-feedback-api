@@ -35,6 +35,14 @@ class FieldsController < ApplicationController
 
   end
 
+  def check_if_submitted
+    submitted = false
+    if UsersField.where('user_id = ? AND date > ? AND date < ?',current_user.id, DateTime.now.beginning_of_day,DateTime.now.beginning_of_day+1.day).size > 0
+      submitted = true
+    end
+    render json:{submitted: submitted}
+  end
+
   private
 
   def field_params

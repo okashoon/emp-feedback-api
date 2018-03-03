@@ -10,6 +10,7 @@ Rails.application.routes.draw do
     resources :fields do
       collection do
         post :submit_fields
+        get :check_if_submitted
       end
     end
 end
