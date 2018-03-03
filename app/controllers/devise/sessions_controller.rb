@@ -16,10 +16,12 @@ class Devise::SessionsController < DeviseTokenAuth::SessionsController
   #   super
   # end
 
-  # protected
+  protected
 
-  # If you have extra params to permit, append them to the sanitizer.
-  # def configure_sign_in_params
-  #   devise_parameter_sanitizer.permit(:sign_in, keys: [:attribute])
-  # end
+  def render_create_success
+    render json: {
+      user: resource_data(resource_json: @resource.token_validation_response),
+      roles: @resource.roles
+    }
+  end
 end

@@ -11,6 +11,7 @@ Rails.application.routes.draw do
       collection do
         post :submit_fields
         get :check_if_submitted
+        get :fields_report
       end
     end
 end

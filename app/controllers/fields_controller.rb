@@ -43,6 +43,20 @@ class FieldsController < ApplicationController
     render json:{submitted: submitted}
   end
 
+  def fields_report
+    result = []
+    today_answers = UsersField.where('date > ? AND date < ?', DateTime.now.beginning_of_day,DateTime.now.beginning_of_day+1.day)
+    Field.all.each do |field|
+      result << {
+        desc:field.desc,
+        yes:today_answers.where(field_id:field.id,state:1).count,
+        no:today_answers.where(field_id:field.id,state:nil).count,
+      }
+    end
+
+    render json:{report: result}
+  end
+
   private
 
   def field_params
