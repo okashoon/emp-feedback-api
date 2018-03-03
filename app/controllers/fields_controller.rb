@@ -52,7 +52,7 @@ class FieldsController < ApplicationController
       result << {
         desc:field.desc,
         yes:today_answers.where(field_id:field.id,state:1).count,
-        no:today_answers.where(field_id:field.id,state:nil).count,
+        no:today_answers.where(field_id:field.id,state:[nil,0]).count,
       }
     end
 
