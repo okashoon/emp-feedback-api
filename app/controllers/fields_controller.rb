@@ -24,4 +24,20 @@ class FieldsController < ApplicationController
 
   def show
   end
+
+  def submit_fields
+   
+    fields = params[:fields]
+
+    fields.each do |field|
+      UsersField.create(user_id:params[:user_id],field_id:field['id'],state:field['state'],date:DateTime.now)
+    end
+
+  end
+
+  private
+
+  def field_params
+    params.fetch(:field, {}).permit(:user_id, :state)
+  end
 end

@@ -7,5 +7,9 @@ Rails.application.routes.draw do
       passwords: 'devise/passwords',
       confirmations: 'devise/confirmations'
     }
-    resources :fields
+    resources :fields do
+      collection do
+        post :submit_fields
+      end
+    end
 end
