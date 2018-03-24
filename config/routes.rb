@@ -13,5 +13,8 @@ Rails.application.routes.draw do
         get :check_if_submitted
         get :fields_report
       end
+      member do
+        get :report_per_field
+      end
     end
 end

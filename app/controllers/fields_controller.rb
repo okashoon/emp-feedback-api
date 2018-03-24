@@ -25,6 +25,8 @@ class FieldsController < ApplicationController
 
 
   def show
+    field = Field.find(params[:id])
+    render json: field
   end
 
   def submit_fields
@@ -53,10 +55,26 @@ class FieldsController < ApplicationController
         desc:field.desc,
         yes:today_answers.where(field_id:field.id,state:1).count,
         no:today_answers.where(field_id:field.id,state:[nil,0]).count,
+        field_id: field.id
       }
     end
 
     render json:{report: result}
+  end
+
+  def report_per_field
+    result = []
+    yes_answers = UsersField
+      .where(field_id:params[:id])
+      .where('date > ? AND date < ? AND state=1', DateTime.now.beginning_of_day,DateTime.now.beginning_of_day+1.day).joins(:user).map{|a|a.user.email}
+    # yes_answers.each do |answer|
+    #   result << {
+    #     email: User.find(answer.user_id).email
+    #   }
+    # end
+    pp yes_answers
+    render json:{report: yes_answers}
+    
   end
 
   private
