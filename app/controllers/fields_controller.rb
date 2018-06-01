@@ -1,8 +1,6 @@
 class FieldsController < ApplicationController
   def index
     @fields = Field.all
-    pp @fields
-    pp current_user
     render json: @fields
   end
 
@@ -21,6 +19,10 @@ class FieldsController < ApplicationController
   end
 
   def destroy
+    field = Field.find(params[:id])
+    if field.destroy
+      render json: field
+    end
   end
 
 
