@@ -6,7 +6,7 @@ Rails.application.configure do
   # since you don't have to restart the web server when you make code changes.
   config.middleware.insert_before 0, Rack::Cors do
     allow do
-      origins '*' #'http://scalear-staging.s3-website-eu-west-1.amazonaws.com'  #* #angular-edu.herokuapp.com
+      origins '*'
       resource '*', 
       :headers => :any,
       :expose  => ['access-token', 'expiry', 'token-type', 'uid', 'client'], 
