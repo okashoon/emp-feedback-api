@@ -1,14 +1,28 @@
 class FieldsController < ApplicationController
   def index
-    @fields = Field.all
+    if !current_user || current_user.roles.where(name:"admin").exists?
+      @fields = Field.all
+    else
+      user_roles = current_user.roles.pluck(:name)
+      @fields = Field.where(for:user_roles)
+    end
     render json: @fields
+  end
+
+  def fields_per_role
+    user_roles = current_user.roles.pluck(:name)
+    @fields = Field.where(for:user_roles)
+    render json: @fields
+    
   end
 
   def new
   end
 
   def create
-    field = Field.create(desc:params['desc'])
+    puts "params------------"
+    pp params
+    field = Field.create(field_params)
     render json: field
   end
 
@@ -82,6 +96,6 @@ class FieldsController < ApplicationController
   private
 
   def field_params
-    params.fetch(:field, {}).permit(:user_id, :state)
+    params.fetch(:field, {}).permit(:user_id, :state, :desc, :for)
   end
 end
