@@ -26,9 +26,15 @@ class FieldsController < ApplicationController
     render json: field
   end
 
+  # PATCH/PUT /fields/1
   def update
+    @field = Field.find(params[:id])
+    if @field.update(field_params)
+      render json: @field
+    else
+      render json: @field.errors, status: :unprocessable_entity
+    end
   end
-
   def edit
   end
 

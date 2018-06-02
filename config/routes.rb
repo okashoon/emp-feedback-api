@@ -19,4 +19,6 @@ Rails.application.routes.draw do
     end
 
     resources :roles
+
+    resources :users
 end
