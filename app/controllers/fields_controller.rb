@@ -1,10 +1,10 @@
 class FieldsController < ApplicationController
   def index
     if !current_user || current_user.roles.where(name:"admin").exists?
-      @fields = Field.all.order("id ASC, for ASC")
+      @fields = Field.all.order(for: :ASC,id: :ASC)
     else
       user_roles = current_user.roles.pluck(:name)
-      @fields = Field.where(for:user_roles+["all"]).order("id ASC, for ASC")
+      @fields = Field.where(for:user_roles+["all"]).order(for: :ASC,id: :ASC)
     end
     render json: @fields
   end
