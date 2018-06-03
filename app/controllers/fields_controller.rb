@@ -4,7 +4,7 @@ class FieldsController < ApplicationController
       @fields = Field.all
     else
       user_roles = current_user.roles.pluck(:name)
-      @fields = Field.where(for:user_roles)
+      @fields = Field.where(for:user_roles+["all"])
     end
     render json: @fields
   end
