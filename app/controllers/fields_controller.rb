@@ -85,17 +85,15 @@ class FieldsController < ApplicationController
   end
 
   def report_per_field
-    result = []
+    
     yes_answers = UsersField
       .where(field_id:params[:id])
+      .where('date > ? AND date < ? AND state=1', DateTime.now.beginning_of_day,DateTime.now.beginning_of_day+1.day).joins(:user).map{|a|a.user.email}
+    no_answers = UsersField
+      .where(field_id:params[:id])
       .where('date > ? AND date < ? AND (state=0 OR state is null)', DateTime.now.beginning_of_day,DateTime.now.beginning_of_day+1.day).joins(:user).map{|a|a.user.email}
-    # yes_answers.each do |answer|
-    #   result << {
-    #     email: User.find(answer.user_id).email
-    #   }
-    # end
-    pp yes_answers
-    render json:{report: yes_answers}
+    
+    render json:{report: {yes: yes_answers, no:no_answers}}
     
   end
 
